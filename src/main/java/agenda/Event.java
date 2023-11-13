@@ -8,14 +8,14 @@ public class Event {
      * The myTitle of this event
      */
     private String myTitle;
-    
+
     /**
      * The starting time of the event
      */
-    private LocalDateTime myStart;
+    protected LocalDateTime myStart;
 
     /**
-     * The durarion of the event 
+     * The durarion of the event
      */
     private Duration myDuration;
 
@@ -39,11 +39,18 @@ public class Event {
      * @param aDay the day to test
      * @return true if the event occurs on that day, false otherwise
      */
+
     public boolean isInDay(LocalDate aDay) {
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        boolean res = false;
+        if (aDay.isAfter(myStart.toLocalDate()) || aDay.equals(myStart.toLocalDate())){
+            if (aDay.isBefore(myStart.plus(myDuration).toLocalDate()) || aDay.isEqual(myStart.plus(myDuration).toLocalDate())) {
+                res = true;
+            }
+        }
+        return res;
     }
-   
+
     /**
      * @return the myTitle
      */
@@ -66,6 +73,8 @@ public class Event {
         return myDuration;
     }
 
-   
-    
+    public String toString(){
+        return "L'évènement est "+getTitle()+" le "+getStart()+" pendant "+getDuration();
+    }
+
 }

@@ -10,8 +10,8 @@ import java.time.temporal.ChronoUnit;
  * a given number of occurrences
  */
 public class FixedTerminationEvent extends RepetitiveEvent {
-
-    
+    private LocalDate terminationInclusive;
+    private long numberOfOccurrences;
     /**
      * Constructs a fixed terminationInclusive event ending at a given date
      *
@@ -27,10 +27,19 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * @param terminationInclusive the date when this event ends
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, LocalDate terminationInclusive) {
-         super(title, start, duration, frequency);
+        super(title, start, duration, frequency);
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-
+        this.terminationInclusive = terminationInclusive;
+        LocalDate Start = start.toLocalDate();
+        if (frequency.equals(ChronoUnit.DAYS)) {
+            numberOfOccurrences = ChronoUnit.DAYS.between(Start, terminationInclusive) + 1;
+        }
+        if (frequency.equals(ChronoUnit.WEEKS)) {
+            numberOfOccurrences = ChronoUnit.WEEKS.between(Start, terminationInclusive) + 1;
+        }
+        if (frequency.equals(ChronoUnit.MONTHS)) {
+            numberOfOccurrences = ChronoUnit.MONTHS.between(Start, terminationInclusive) + 1;
+        }
     }
 
     /**
@@ -50,7 +59,18 @@ public class FixedTerminationEvent extends RepetitiveEvent {
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, long numberOfOccurrences) {
         super(title, start, duration, frequency);
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.numberOfOccurrences = numberOfOccurrences;
+        this.numberOfOccurrences = numberOfOccurrences;
+        LocalDate Start = start.toLocalDate();
+        if (frequency.equals(ChronoUnit.DAYS)) {
+            terminationInclusive = Start.plusDays(numberOfOccurrences-1);
+        }
+        if (frequency.equals(ChronoUnit.WEEKS)) {
+            terminationInclusive = Start.plusWeeks(numberOfOccurrences-1);
+        }
+        if (frequency.equals(ChronoUnit.MONTHS)) {
+            terminationInclusive = Start.plusMonths(numberOfOccurrences-1);
+        }
     }
 
     /**
@@ -59,12 +79,12 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public LocalDate getTerminationDate() {
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");   
+        return terminationInclusive;
     }
 
     public long getNumberOfOccurrences() {
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        return numberOfOccurrences;
     }
-        
+
 }
