@@ -56,7 +56,12 @@ public class Agenda {
      * @return vrai s’il y a de la place dans l'agenda pour cet événement
      */
     public boolean isFreeFor(Event e) {
-
+        for (Event event : Events) {
+            if (e.getStart().plus(e.getDuration()).isAfter(event.getStart()) && e.getStart().isBefore(event.getStart().plus(event.getDuration()))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
